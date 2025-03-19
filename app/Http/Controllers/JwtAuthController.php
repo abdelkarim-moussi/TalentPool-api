@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
-class JwtAuthentication extends Controller
+class JwtAuthController extends Controller
 {
 
     public function register(Request $request){
@@ -16,12 +17,17 @@ class JwtAuthentication extends Controller
                 'name'=>'required|string|max:255',
                 'email'=>'required|email|max:255',
                 'role'=>'required',
-                'password'=>'required|confirmend'
+                'password'=>'required|confirmed'
             ]
             );
 
-        $user = DB::table('users')->insert($validate);
+        $user = User::create($validate);
 
-        $token = JWTAuth::
+        $token = JWTAuth::fromUser($user);
+
+        return response()->json([
+            'user'=>$user,
+            'token'=>$token
+        ]);
     }
 }
