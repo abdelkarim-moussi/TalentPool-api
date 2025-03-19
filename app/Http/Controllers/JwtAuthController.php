@@ -45,22 +45,52 @@ class JwtAuthController extends Controller
                     [
                         'error'=>'invalid credentials'
                     ]
-                    );
+                    ,401);
             }
+
+            $user = JWTAuth::user();
+
+            $token = JWTAuth::claims(['role' => $user->role])->fromUser($user);
+
+            return response()->json(
+                [
+                    'user'=>$user,
+                    'token'=>$token
+                ]
+                );
+                
         }catch(JWTException $e){
 
             return response()->json(
                 [
-                    'error'=>'invalid token'.$e
+                    'error'=>'could not create token'
                 ]
-                );
+                ,500);
         }
 
-        return response()->json(
-            [
-                'user'=>JWTAuth::user(),
-                'token'=>$token
-            ]
-            );
     }
+
+    public function getUser(){
+
+        try{
+            if(! $user = JWTAuth::parsetoken()->authenticate()){
+                return response()->json([
+                    'error'=>'user not found'
+                ], 404);
+            }
+
+            return response()->json([
+                'user'=>$user
+            ]);
+
+        }catch(JWTException $e){
+
+            return response()->json([
+                'error'=>'invalid token'
+            ],500);
+
+        }
+    }
+
+    public function log
 }
