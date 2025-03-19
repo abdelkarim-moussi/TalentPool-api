@@ -9,4 +9,4 @@ Route::post('register',[JwtAuthController::class ,'register']);
 Route::post('login',[JwtAuthController::class ,'login']);
 Route::get('user',[JwtAuthController::class ,'getUser']);
 
-Route::post('logout',[JwtAuthController::class ,'logout']);
+Route::post('logout',[JwtAuthController::class ,'logout'])->middleware('jwtauth');

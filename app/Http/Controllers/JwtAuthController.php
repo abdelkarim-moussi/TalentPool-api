@@ -50,8 +50,6 @@ class JwtAuthController extends Controller
 
             $user = JWTAuth::user();
 
-            $token = JWTAuth::claims(['role' => $user->role])->fromUser($user);
-
             return response()->json(
                 [
                     'user'=>$user,
