@@ -1,7 +1,7 @@
 <?php
 namespace App\Services;
 
-class AnnouncementService
+class JobAdService
 {
     
 }

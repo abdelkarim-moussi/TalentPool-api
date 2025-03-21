@@ -5,7 +5,7 @@ use App\Models\Announcement;
 use App\Models\Application;
 use App\Repositories\BaseRepository;
 
-class AnnouncementRepository extends BaseRepository
+class JobAdRepository extends BaseRepository
 {
 
 public function __construct(Announcement $announcement)

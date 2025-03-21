@@ -22,12 +22,18 @@ class ApplicationService
     public function createApp(object $data){
         $validated = $data->validate(
             [
-                'candidate_id'=>'required|exists:users,id',
-                'jobad_id'=>'required|exists:jobads,id',
-                'cv'=>'required',
-                'coverLetter'=>'required'
+                'candidate_id'=>'required',
+                'jobad_id'=>'required',
+                'cv'=>'required|file|mimes:pdf',
+                'coverLetter'=>'required|file|mimes:pdf',
             ]
             );
+
+        if($data->file('cv') && $data->file('coverLetter')){
+
+            $validated['cv'] = $data->file('cv')->store('uploads', 'public');
+            $validated['coverLetter'] = $data->file('coverLetter')->store('uploads', 'public');
+        }
 
         return $this->appRepo->create($validated);
     }

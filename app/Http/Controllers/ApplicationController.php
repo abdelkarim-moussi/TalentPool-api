@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Repositories\BaseRepositoryInterface;
 use App\Services\ApplicationService;
 use Illuminate\Http\Request;
 
@@ -24,5 +23,14 @@ class ApplicationController extends Controller
                 'applications'=>$applications
             ]
             );
+    }
+
+    public function store(Request $request){
+
+        $application = $this->appRepos->createApp($request);
+
+        return response()->json([
+            'application'=>$application
+        ]);
     }
 }
