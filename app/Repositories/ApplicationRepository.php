@@ -1,10 +1,12 @@
 <?php
-
+namespace App\Repositories;
 use App\Models\Application;
+use App\Repositories\BaseRepositoryInterface;
 
-class ApplicationRepository implements applicationRepositoryInterface
+class ApplicationRepository implements BaseRepositoryInterface
 {
 
+    
     public function all()
     {
         return Application::all();
@@ -17,17 +19,17 @@ class ApplicationRepository implements applicationRepositoryInterface
 
     public function create(array $data){
 
-        $application = Application::create($data);
-        return $application;
+        $model = Application::create($data);
+        return $model;
 
     }
 
     public function update($id, array $data)
     {
-        $application = Application::find($id);
-        $application->update($data);
+        $model = Application::find($id);
+        $model->update($data);
         
-        return $application;
+        return $model;
         
     }
 
@@ -35,6 +37,4 @@ class ApplicationRepository implements applicationRepositoryInterface
     {
         return Application::destroy($id);
     }
-
-
 }
