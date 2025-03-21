@@ -1,5 +1,7 @@
 <?php
 namespace App\Services;
+
+use App\Models\Application;
 use App\Repositories\ApplicationRepository;
 
 class ApplicationService
@@ -15,11 +17,11 @@ class ApplicationService
         return $this->appRepo->all();
     }
 
-    public function findById($id){
+    public function findApplicationById($id){
         return $this->appRepo->find($id);
     }
 
-    public function createApp(object $data){
+    public function createApplication(object $data){
         $validated = $data->validate(
             [
                 'candidate_id'=>'required',
@@ -38,7 +40,7 @@ class ApplicationService
         return $this->appRepo->create($validated);
     }
 
-    public function updateApp($id,object $data){
+    public function updateApplication($id,object $data){
 
         $validated = $data->validate(
             [
@@ -55,6 +57,21 @@ class ApplicationService
         }
 
         return $this->appRepo->update($id,$validated);
+    }
+
+    public function deleteApplication($id){
+
+        if(!$this->appRepo->delete($id)){
+
+            return response()->json(
+                [
+                    'error'=>'this application dosen\'t exist'
+                ]
+                );
+        }
+
+        return $this->appRepo->delete($id);
+
     }
 }
 

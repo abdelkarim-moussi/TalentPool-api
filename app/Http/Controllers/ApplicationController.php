@@ -29,14 +29,14 @@ class ApplicationController extends Controller
     public function show(Application $application){
         return response()->json(
             [
-                'application'=>$this->appService->findById($application->id)
+                'application'=>$this->appService->findApplicationById($application->id)
             ]
             );
     }
 
     public function store(Request $request){
 
-        $application = $this->appService->createApp($request);
+        $application = $this->appService->createApplication($request);
 
         return response()->json([
             'application'=>$application
@@ -48,7 +48,17 @@ class ApplicationController extends Controller
         return response()->json(
             [
                 'message'=>'application updated succefully',
-                'application'=>$this->appService->updateApp($application->id,$request)
+                'application'=>$this->appService->updateApplication($application->id,$request)
+            ]
+            );
+    }
+
+    public function destroy(Application $application){
+                
+        return response()->json(
+            [
+                'message'=>'application deleted succefully',
+                'application'=> $application
             ]
             );
     }
