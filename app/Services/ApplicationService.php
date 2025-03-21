@@ -37,5 +37,24 @@ class ApplicationService
 
         return $this->appRepo->create($validated);
     }
+
+    public function updateApp($id,object $data){
+
+        $validated = $data->validate(
+            [
+                'cv'=>'file|mimes:pdf',
+                'coverLetter'=>'file|mimes:pdf',
+            ]
+            );
+
+        if($data->file('cv') && $data->file('coverLetter')){
+
+            $validated['cv'] = $data->file('cv')->store('uploads', 'public');
+            $validated['coverLetter'] = $data->file('coverLetter')->store('uploads', 'public');
+
+        }
+
+        return $this->appRepo->update($id,$validated);
+    }
 }
 
