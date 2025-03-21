@@ -11,12 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('applications', function (Blueprint $table) {
+        Schema::create('jobads', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained()->cascadeOnDelete()->cascadeOnUpdatet();
-            $table->foreignId('announcement_id')->constrained()->cascadeOnDelete()->cascadeOnUpdate();
-            $table->text('cv');
-            $table->text('motivation');
+            $table->foreignId('recruiter_id')->constrained('users')->cascadeOnDelete()->cascadeOnUpdate();
+            $table->string('title');
+            $table->text('description');
+            $table->string('salaryRange');
+            $table->string('location');
             $table->timestamps();
         });
     }
@@ -26,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('applications');
+        //
     }
 };
