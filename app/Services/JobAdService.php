@@ -34,23 +34,18 @@ class JobAdService
 
         return $this->jobAdRepo->create($validated);
     }
-    
+
 
     public function updateJobAd($id,object $data){
 
-        $validated = $data->validate(
+         $validated = $data->validate(
             [
-                'cv'=>'file|mimes:pdf',
-                'coverLetter'=>'file|mimes:pdf',
+                'title'=>'required|string|max:100',
+                'description'=>'required|string|max:255',
+                'salaryRange'=>'required|string|max:50',
+                'location'=>'required|string|max:50'
             ]
             );
-
-        if($data->file('cv') && $data->file('coverLetter')){
-
-            $validated['cv'] = $data->file('cv')->store('uploads', 'public');
-            $validated['coverLetter'] = $data->file('coverLetter')->store('uploads', 'public');
-
-        }
 
         return $this->jobAdRepo->update($id,$validated);
     }
