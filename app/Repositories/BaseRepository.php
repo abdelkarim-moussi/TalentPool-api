@@ -1,11 +1,10 @@
 <?php
 namespace App\Repositories;
 
-use App\Models\Application;
 use App\Repositories\BaseRepositoryInterface;
 use Illuminate\Database\Eloquent\Model;
 
-class BaseRepository implements BaseRepositoryInterface
+abstract class BaseRepository implements BaseRepositoryInterface
 {
     protected Model $model;
 
@@ -28,7 +27,7 @@ class BaseRepository implements BaseRepositoryInterface
 
         $model = $this->model->create($data);
         return $model;
-
+        
     }
 
     public function update($id, array $data)

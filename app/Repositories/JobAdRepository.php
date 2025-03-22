@@ -1,16 +1,15 @@
 <?php
 namespace App\Repositories;
 
-use App\Models\Announcement;
-use App\Models\Application;
+use App\Models\JobAd;
 use App\Repositories\BaseRepository;
 
 class JobAdRepository extends BaseRepository
 {
 
-public function __construct(Announcement $announcement)
+public function __construct(JobAd $jobad)
 {
-    parent::__construct($announcement);
-    
+    parent::__construct($jobad);
+
 }
 }
