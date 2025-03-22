@@ -27,11 +27,12 @@ abstract class BaseRepository implements BaseRepositoryInterface
 
         $model = $this->model->create($data);
         return $model;
-        
+
     }
 
     public function update($id, array $data)
     {
+     
         $model = $this->model->find($id);
         $model->update($data);
         
@@ -43,6 +44,5 @@ abstract class BaseRepository implements BaseRepositoryInterface
     {
         return $this->model->destroy($id);
     }
-
 
 }

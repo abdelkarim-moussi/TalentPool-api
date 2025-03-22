@@ -50,13 +50,13 @@ class JobAdService
         return $this->jobAdRepo->update($id,$validated);
     }
 
-    public function deleteDeleteJobAd($id){
+    public function deleteJobAd($id){
 
         if(!$this->jobAdRepo->delete($id)){
 
             return response()->json(
                 [
-                    'error'=>'this application dosen\'t exist'
+                    'error'=>'this jobAd dosen\'t exist'
                 ]
                 );
         }

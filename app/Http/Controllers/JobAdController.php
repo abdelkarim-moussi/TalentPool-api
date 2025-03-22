@@ -46,4 +46,14 @@ class JobAdController extends Controller
             );
 
     }
+
+    public function destroy($id){
+
+        $jobAd = $this->jobAdService->deleteJobAd($id);
+        return response()->json(
+            [
+                'message'=>'joAd deleted succefully',
+            ]
+            );
+    }
 }
