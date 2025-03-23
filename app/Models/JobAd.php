@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
 
 class JobAd extends Model
 {
@@ -14,5 +15,15 @@ class JobAd extends Model
         'salaryRange',
         'location'
     ];
+
+
+    public function publishable() : MorphTo
+    {
+        return $this->morphTo(User::class);
+    }
     
+    public function applications()
+    {
+        return $this->morphMany(Application::class,'applicable');
+    }
 }

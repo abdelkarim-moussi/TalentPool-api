@@ -55,4 +55,12 @@ class User extends Authenticatable implements JWTSubject
             'password' => 'hashed',
         ];
     }
+
+    public function jobads(){
+        return $this->morphMany(JobAd::class ,'publishable');
+    }
+
+    public function applications(){
+        return $this->morphMany(Application::class,'candidatable');
+    }
 }
