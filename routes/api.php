@@ -14,4 +14,6 @@ Route::get('user',[JwtAuthController::class ,'getUser']);
 Route::post('logout',[JwtAuthController::class ,'logout'])->middleware('jwtauth');
 
 Route::apiResource('applications',ApplicationController::class);
+Route::put('applications/withdraw/{id}',[ApplicationController::class,'withdrawApp']);
+
 Route::apiResource('jobads',JobAdController::class);

@@ -25,7 +25,7 @@ class ApplicationService
         $validated = $data->validate(
             [
                 'candidate_id'=>'required|exists:users,id',
-                'jobad_id'=>'required|exists:iusers,id',
+                'jobad_id'=>'required|exists:users,id',
                 'cv'=>'required|file|mimes:pdf',
                 'coverLetter'=>'required|file|mimes:pdf',
             ]
@@ -72,6 +72,12 @@ class ApplicationService
 
         return $this->appRepo->delete($id);
 
+    }
+
+    public function withdrawApplication($id){
+        
+        return $this->appRepo->withdraw($id);
+        
     }
 }
 

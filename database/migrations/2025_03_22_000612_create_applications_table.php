@@ -17,7 +17,7 @@ return new class extends Migration
             $table->foreignId('jobad_id')->constrained('job_ads')->cascadeOnDelete()->cascadeOnUpdate();
             $table->text('cv');
             $table->text('coverLetter');
-            $table->enum('status',['pending','received','accepted','refused','in_interview','done'])->default('pending');
+            $table->enum('status',['pending','received','withdrawed','accepted','refused','in_interview','done'])->default('pending');
             $table->timestamps();
         });
     }

@@ -62,4 +62,14 @@ class ApplicationController extends Controller
             ]
             );
     }
+
+    public function withdrawApp($id){
+
+        return response()->json(
+            [
+                'message'=>'application withdrawed succefully',
+                'application'=>$this->appService->withdrawApplication($id)
+            ]
+            );
+    }
 }
