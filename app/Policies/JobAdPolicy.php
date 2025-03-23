@@ -2,28 +2,27 @@
 
 namespace App\Policies;
 
-use App\Models\Application;
 use App\Models\JobAd;
 use App\Models\User;
 use Illuminate\Auth\Access\Response;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
-class ApplicationPolicy
+class JobAdPolicy
 {
     /**
      * Determine whether the user can view any models.
      */
-    public function viewAny(User $user,JobAd $jobAd): bool
+    public function viewAny(User $user): bool
     {
-        return $user->id = $jobAd->recruiter_id;
+        return false;
     }
 
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, Application $application): bool
+    public function view(User $user, JobAd $jobAd): bool
     {
-        return $user->id = $application->candidate_id;
+        return false;
     }
 
     /**
@@ -37,32 +36,32 @@ class ApplicationPolicy
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, Application $application): bool
+    public function update(User $user, JobAd $jobAd): bool
     {
-        return $user->id = $application->candidate_id;
+        return $user->id = $jobAd->recruiter_id;
     }
 
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, Application $application): bool
+    public function delete(User $user, JobAd $jobAd): bool
     {
-        return $user->id = $application->candidate_id;
+        return $user->id = $jobAd->recruiter_id;
     }
 
     /**
      * Determine whether the user can restore the model.
      */
-    public function restore(User $user, Application $application): bool
+    public function restore(User $user, JobAd $jobAd): bool
     {
-        return false;
+        return $user->id = $jobAd->recruiter_id;
     }
 
     /**
      * Determine whether the user can permanently delete the model.
      */
-    public function forceDelete(User $user, Application $application): bool
+    public function forceDelete(User $user, JobAd $jobAd): bool
     {
-        return false;
+        return $user->id = $jobAd->recruiter_id;
     }
 }
