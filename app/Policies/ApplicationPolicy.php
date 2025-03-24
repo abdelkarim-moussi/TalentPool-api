@@ -13,9 +13,9 @@ class ApplicationPolicy
     /**
      * Determine whether the user can view any models.
      */
-    public function viewAny(User $user,JobAd $jobAd): bool
+    public function viewAny(User $user): bool
     {
-        return $user->id = $jobAd->recruiter_id;
+        return false;
     }
 
     /**
@@ -23,15 +23,15 @@ class ApplicationPolicy
      */
     public function view(User $user, Application $application): bool
     {
-        return $user->id = $application->candidate_id;
+        return $user->id === $application->candidate_id;
     }
 
     /**
      * Determine whether the user can create models.
      */
-    public function create(User $user): bool
+    public function create(User $user , Application $application): bool
     {
-        return $user->id = JWTAuth::user()->id;
+        return $user->role === 'candidate';
     }
 
     /**
@@ -39,7 +39,7 @@ class ApplicationPolicy
      */
     public function update(User $user, Application $application): bool
     {
-        return $user->id = $application->candidate_id;
+        return $user->id === $application->candidate_id;
     }
 
     /**
@@ -47,7 +47,7 @@ class ApplicationPolicy
      */
     public function delete(User $user, Application $application): bool
     {
-        return $user->id = $application->candidate_id;
+        return $user->id === $application->candidate_id;
     }
 
     /**

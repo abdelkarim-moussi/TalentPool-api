@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Application;
+use App\Models\JobAd;
 use App\Services\ApplicationService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class ApplicationController extends Controller
 {
@@ -27,9 +29,20 @@ class ApplicationController extends Controller
     }
 
     public function show(Application $application){
+
+        $application = $this->appService->findApplicationById($application->id);
+        
+        if(! Gate::authorize('view',$application)){
+            return response()->json(
+                [
+                    'message'=>'you are not authorized to see this application'
+                ]
+                );
+        }
+
         return response()->json(
             [
-                'application'=>$this->appService->findApplicationById($application->id)
+                'application'=>$application
             ]
             );
     }
@@ -37,6 +50,14 @@ class ApplicationController extends Controller
     public function store(Request $request){
 
         $application = $this->appService->createApplication($request);
+
+        if(! Gate::authorize('create',$application)){
+            return response()->json(
+                [
+                    'message'=>'you are not authorized to apply to this job'
+                ]
+                );
+        }
 
         return response()->json([
             'application'=>$application
@@ -69,6 +90,18 @@ class ApplicationController extends Controller
             [
                 'message'=>'application withdrawed succefully',
                 'application'=>$this->appService->withdrawApplication($id)
+            ]
+            );
+    }
+
+    public function updateStatus($id , Request $request){
+
+        $application = $this->appService->updateAppStatus($id,$request);
+
+        return response()->json(
+            [
+                'message'=>'application status updated succefully',
+                'application'=>$application
             ]
             );
     }

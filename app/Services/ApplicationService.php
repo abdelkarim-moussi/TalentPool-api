@@ -79,5 +79,17 @@ class ApplicationService
         return $this->appRepo->withdraw($id);
         
     }
+
+    public function updateAppStatus($id, $data){
+
+        $validated = $data->validate(
+            [
+                'status'=>'required|in:received,accepted,refused,in_interview,done'
+            ]
+            );
+        
+        return $this->appRepo->updateApplicationStatus($id,$data->status);
+
+    }
 }
 

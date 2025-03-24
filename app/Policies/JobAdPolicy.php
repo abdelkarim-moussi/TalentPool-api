@@ -30,7 +30,7 @@ class JobAdPolicy
      */
     public function create(User $user): bool
     {
-        return $user->id = JWTAuth::user()->id;
+        return $user->role === 'recruiter';
     }
 
     /**
@@ -38,7 +38,7 @@ class JobAdPolicy
      */
     public function update(User $user, JobAd $jobAd): bool
     {
-        return $user->id = $jobAd->recruiter_id;
+        return $user->id === $jobAd->recruiter_id;
     }
 
     /**
@@ -46,7 +46,7 @@ class JobAdPolicy
      */
     public function delete(User $user, JobAd $jobAd): bool
     {
-        return $user->id = $jobAd->recruiter_id;
+        return $user->id === $jobAd->recruiter_id;
     }
 
     /**
@@ -54,7 +54,7 @@ class JobAdPolicy
      */
     public function restore(User $user, JobAd $jobAd): bool
     {
-        return $user->id = $jobAd->recruiter_id;
+        return $user->id === $jobAd->recruiter_id;
     }
 
     /**
@@ -62,6 +62,6 @@ class JobAdPolicy
      */
     public function forceDelete(User $user, JobAd $jobAd): bool
     {
-        return $user->id = $jobAd->recruiter_id;
+        return $user->id === $jobAd->recruiter_id;
     }
 }

@@ -14,6 +14,8 @@ Route::post('logout',[JwtAuthController::class ,'logout'])->middleware('jwtauth'
 
 Route::get('jobads',[JobAdController::class,'index']);
 
+Route::patch('applications/updatestatus/{id}',[ApplicationController::class,'updateStatus'])->middleware('jwtauth');
+
 Route::middleware(['jwtauth'])->group(function(){
     Route::apiResource('applications',ApplicationController::class);
     Route::put('applications/withdraw/{id}',[ApplicationController::class,'withdrawApp']);

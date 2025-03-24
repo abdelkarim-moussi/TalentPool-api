@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\JobAd;
 use App\Services\JobAdService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class JobAdController extends Controller
 {
@@ -28,8 +29,16 @@ class JobAdController extends Controller
     }
 
     public function store(Request $request){
-    
+
         $jobAd = $this->jobAdService->createJobAdd($request);
+
+        if(! Gate::authorize('create',$jobAd)){
+            return response()->json(
+                [
+                    'message'=> 'you are not authorized to create a jobAd'
+                ]
+            );
+        }
 
         return response()->json(compact('jobAd'));
     }
