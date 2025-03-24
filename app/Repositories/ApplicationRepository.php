@@ -1,6 +1,9 @@
 <?php
 namespace App\Repositories;
 use App\Models\Application;
+use App\Models\JobAd;
+use App\Models\User;
+use App\Notifications\ApplicationStatusNotification;
 use App\Repositories\BaseRepository;
 use App\Repositories\ApplicationInterface;
 use Tymon\JWTAuth\Facades\JWTAuth;
@@ -46,7 +49,11 @@ class ApplicationRepository extends BaseRepository implements ApplicationInterfa
     public function updateApplicationStatus($id,$status){
 
         $application = Application::find($id);
-     
+
+        $user = User::find($application->candidate_id);
+
+        $jobAd = JobAd::find($application->jobad_id);
+
         if($application->status === $status){
 
             abort(403,'this application already have this status');
@@ -56,7 +63,13 @@ class ApplicationRepository extends BaseRepository implements ApplicationInterfa
         $application->status = $status;
         $application->save();
 
+        $data['hi'] = 'your application for : '. $jobAd->title .' has been ' .$application->status;
+        $data['application_id'] = $application->id;
+
+        $user->notify(new ApplicationStatusNotification($data));
+
         return $application;
+        
     }
     
 }
