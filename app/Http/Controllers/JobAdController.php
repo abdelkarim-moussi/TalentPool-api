@@ -6,6 +6,7 @@ use App\Models\JobAd;
 use App\Services\JobAdService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 class JobAdController extends Controller
 {
@@ -32,15 +33,8 @@ class JobAdController extends Controller
 
         $jobAd = $this->jobAdService->createJobAdd($request);
 
-        if(! Gate::authorize('create',$jobAd)){
-            return response()->json(
-                [
-                    'message'=> 'you are not authorized to create a jobAd'
-                ]
-            );
-        }
-
         return response()->json(compact('jobAd'));
+        
     }
 
     public function update($id,Request $request){
@@ -49,7 +43,7 @@ class JobAdController extends Controller
 
         return response()->json(
             [
-                'message'=>'your application updated succefully',
+                'message'=>'your jobAd updated succefully',
                 'jobAd'=>$jobAd
             ]
             );
@@ -59,9 +53,10 @@ class JobAdController extends Controller
     public function destroy($id){
 
         $jobAd = $this->jobAdService->deleteJobAd($id);
+
         return response()->json(
             [
-                'message'=>'joAd deleted succefully',
+                $this->jobAdService->deleteJobAd($id)
             ]
             );
     }

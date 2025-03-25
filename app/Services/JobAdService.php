@@ -52,15 +52,6 @@ class JobAdService
 
     public function deleteJobAd($id){
 
-        if(!$this->jobAdRepo->delete($id)){
-
-            return response()->json(
-                [
-                    'error'=>'this jobAd dosen\'t exist'
-                ]
-                );
-        }
-
         return $this->jobAdRepo->delete($id);
 
     }
