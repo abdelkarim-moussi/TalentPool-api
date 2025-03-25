@@ -11,6 +11,7 @@ Route::post('login',[JwtAuthController::class ,'login']);
 Route::get('user',[JwtAuthController::class ,'getUser']);
 
 Route::post('logout',[JwtAuthController::class ,'logout'])->middleware('jwtauth');
+Route::patch('update_password',[JwtAuthController::class ,'updatePassword'])->middleware('jwtauth');
 
 Route::get('jobads',[JobAdController::class,'index']);
 

@@ -107,4 +107,26 @@ class JwtAuthController extends Controller
             ]
             );
     }
+
+    public function updatePassword(Request $request){
+
+        $validated = $request->validate(
+            [
+                'old_password'=>'required|min:6',
+                'new_password'=>'required|confirmed|min:6',
+                'new_password_confirmation'=>'required'
+            ]
+            );
+
+        if(! JWTAuth::user()->password === $validated['old_password']){
+            abort(403,'old password incorect');
+        }
+
+        User::find(JWTAuth::user()->id)->update(['password'=>$request->new_password]);
+        return response()->json(
+            [
+                'message'=>"password updated succefully"
+            ]
+            );
+    }
 }
