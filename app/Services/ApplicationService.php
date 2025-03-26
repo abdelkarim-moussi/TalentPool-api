@@ -22,10 +22,11 @@ class ApplicationService
     }
 
     public function createApplication(object $data){
+        
         $validated = $data->validate(
             [
                 'candidate_id'=>'required|exists:users,id',
-                'jobad_id'=>'required|exists:users,id',
+                'jobad_id'=>'required|exists:job_ads,id',
                 'cv'=>'required|file|mimes:pdf',
                 'coverLetter'=>'required|file|mimes:pdf',
             ]

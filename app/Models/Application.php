@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\MorphTo;
 
 class Application extends Model
 {
@@ -15,13 +14,13 @@ class Application extends Model
         'coverLetter'
     ];
 
-    public function applicable():MorphTo
+    public function candidate()
     {
-        return $this->morphTo(JobAd::class);
+        return $this->belongsTo(User::class);
     }
 
-    public function candidatable():MorphTo
-    {
-        return $this->morphTo(User::class);
+    public function jobAd(){
+        return $this->belongsTo(JobAd::class,'jobad_id');
     }
+
 }

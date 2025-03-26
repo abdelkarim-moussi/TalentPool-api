@@ -15,6 +15,7 @@ Route::post('logout',[JwtAuthController::class ,'logout'])->middleware('jwtauth'
 Route::patch('update_password',[JwtAuthController::class ,'updatePassword'])->middleware('jwtauth');
 
 Route::get('jobads',[JobAdController::class,'index']);
+Route::get('jobads/{id}',[JobAdController::class,'show']);
 
 Route::patch('applications/updatestatus/{id}',[ApplicationController::class,'updateStatus'])->middleware('jwtauth');
 
@@ -23,7 +24,8 @@ Route::middleware(['jwtauth'])->group(function(){
     Route::put('applications/withdraw/{id}',[ApplicationController::class,'withdrawApp']);
     Route::apiResource('jobads',JobAdController::class)->except(['index','show']);
 
-    Route::get('statistics/jobAdStatistics',[StatisticsController::class,'jobAdStatistiques']);
+    Route::get('statistics/jobads_statistics',[StatisticsController::class,'jobAdStatistics']);
+    Route::get('statistics/applications_statistics',[StatisticsController::class,'applicationsStatistics']);
 
 });
 

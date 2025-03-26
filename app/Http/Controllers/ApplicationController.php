@@ -31,14 +31,6 @@ class ApplicationController extends Controller
     public function show(Application $application){
 
         $application = $this->appService->findApplicationById($application->id);
-        
-        if(! Gate::authorize('view',$application)){
-            return response()->json(
-                [
-                    'message'=>'you are not authorized to see this application'
-                ]
-                );
-        }
 
         return response()->json(
             [
@@ -50,14 +42,6 @@ class ApplicationController extends Controller
     public function store(Request $request){
 
         $application = $this->appService->createApplication($request);
-
-        if(! Gate::authorize('create',$application)){
-            return response()->json(
-                [
-                    'message'=>'you are not authorized to apply to this job'
-                ]
-                );
-        }
 
         return response()->json([
             'application'=>$application

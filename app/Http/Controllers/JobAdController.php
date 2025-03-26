@@ -6,7 +6,10 @@ use App\Models\JobAd;
 use App\Services\JobAdService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
+use Symfony\Component\Routing\Loader\Configurator\ImportConfigurator;
 use Tymon\JWTAuth\Facades\JWTAuth;
+
+use function PHPUnit\Framework\returnSelf;
 
 class JobAdController extends Controller
 {
@@ -28,6 +31,19 @@ class JobAdController extends Controller
         );
 
     }
+
+    public function show($id){
+        
+        $jobAd = $this->jobAdService->findJobAdById($id);
+
+        if(! $jobAd){
+            abort(404,'jobAd not found');
+        }
+        
+        return response()->json(compact('jobAd'));
+
+    }
+
 
     public function store(Request $request){
 

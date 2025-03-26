@@ -29,7 +29,7 @@ class ApplicationPolicy
     /**
      * Determine whether the user can create models.
      */
-    public function create(User $user , Application $application): bool
+    public function create(User $user): bool
     {
         return $user->role === 'candidate';
     }

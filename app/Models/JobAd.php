@@ -16,14 +16,11 @@ class JobAd extends Model
         'location'
     ];
 
-
-    public function publishable() : MorphTo
-    {
-        return $this->morphTo(User::class);
+    public function recruiter(){
+        return $this->belongsTo(User::class);
     }
-    
-    public function applications()
-    {
-        return $this->morphMany(Application::class,'applicable');
+
+    public function applications(){
+        return $this->hasMany(Application::class,'jobad_id');
     }
 }

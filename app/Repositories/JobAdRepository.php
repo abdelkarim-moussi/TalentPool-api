@@ -14,6 +14,11 @@ public function __construct(JobAd $jobad)
 
 }
 
+public function find($id)
+{
+    return $this->model->where('id',$id)->with('recruiter')->get();
+}
+
 public function create(array $data)
 {
 

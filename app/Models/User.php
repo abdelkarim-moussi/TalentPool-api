@@ -57,11 +57,11 @@ class User extends Authenticatable implements JWTSubject
         ];
     }
 
-    public function jobads(){
-        return $this->morphMany(JobAd::class ,'publishable');
+    public function jobAds(){
+        return $this->hasMany(JobAd::class);
     }
 
-    public function applications(){
-        return $this->morphMany(Application::class,'candidatable');
+    public function application(){
+        return $this->hasOne(Application::class);
     }
 }

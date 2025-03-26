@@ -6,6 +6,8 @@ use App\Models\User;
 use App\Notifications\ApplicationStatusNotification;
 use App\Repositories\BaseRepository;
 use App\Repositories\ApplicationInterface;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
 class ApplicationRepository extends BaseRepository implements ApplicationInterface
@@ -15,15 +17,31 @@ class ApplicationRepository extends BaseRepository implements ApplicationInterfa
     {
         parent::__construct($application);
     }
+
+    public function find($id)
+    {
+        $application = Application::find($id);
+
+        if(Gate::denies('view',$application)){
+           abort(403,'you are not allowed to view this application');
+        }
+
+        return $this->model->where('id',$id)->with('candidate')->get();
+    }
     
     public function create(array $data){
          
-        $application = Application::where('candidate_id',$data['candidate_id'])->first();
+        $application = DB::table('applications')->where('candidate_id',$data['candidate_id'])->where('jobad_id',$data['jobad_id'])->first();
     
-        if($application){
+        if($application !== null){
 
             abort(403,'you have already applied to this job');
 
+        }
+        return $application;
+
+        if(Gate::denies('create',Application::class)){
+            abort(403,'you are not allowed to apply to this jobAd');
         }
 
         $model = $this->model->create($data);
